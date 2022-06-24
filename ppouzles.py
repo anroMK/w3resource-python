@@ -190,6 +190,8 @@ Output:
 """
 import re
 from string import printable
+
+from pyparsing import identchars
 def task8(str):
     words = re.split(', | ', str)
     return(words)
@@ -386,9 +388,232 @@ def task17(n):
 #print(task17(15))
 
 
+"""
+18. An irregular/uneven matrix, or ragged matrix, is a matrix that has a different number of elements in each row. Ragged matrices are not used in linear algebra, since standard matrix transformations cannot be performed on them, but they are useful as arrays in computing.
+Write a Python program to find the indices of all occurrences of target in the uneven matrix. Go to the editor
+Input:
+[([1, 3, 2, 32, 19], [19, 2, 48, 19], [], [9, 35, 4], [3, 19]),19]
+Output:
+[[0, 4], [1, 0], [1, 3], [4, 1]]
+Input:
+[([1, 2, 3, 2], [], [7, 9, 2, 1, 4]),2]
+Output:
+[[0, 1], [0, 3], [2, 2]]
+"""
 
 
 
+def task18(list, n):
+    return [[i,j] for i, sublist in enumerate(list) for j, val in enumerate(sublist) if n in sublist and val == n]
+    
+
+
+#print(task18(([1, 3, 2, 32, 19], [19, 2, 48, 19], [], [9, 35, 4], [3, 19]), 19))
+#print(task18(([1, 2, 3, 2], [], [7, 9, 2, 1, 4]),2))
+
+"""
+19. Write a Python program to split a given string (s) into strings if there is a space in the string, otherwise split on commas if there is a comma, otherwise return the list of lowercase letters with odd order (order of a = 0, b = 1, etc.) Go to the editor
+Input:
+a b c d
+Split the said string into strings if there is a space in the string,
+otherwise split on commas if there is a comma,
+Output:
+['a', 'b', 'c', 'd']
+Input:
+a,b,c,d
+Split the said string into strings if there is a space in the string,
+otherwise split on commas if there is a comma,
+Output:
+['a', 'b', 'c', 'd']
+Input:
+abcd
+Split the said string into strings if there is a space in the string,
+otherwise split on commas if there is a comma,
+Output:
+['b', 'd']
+"""
+
+def task19(s):
+    if ' ' in s:
+        return s.split()
+    if ',' in s:
+        return s.split(',') 
+    return [c for c in s if c.lower() if ord(c) % 2 == 0]
+
+
+#print(task19('a b c d'))
+#print(task19('a,b,c,d'))
+#print(task19('abcd'))
+
+"""
+20. Write a Python program to determine the direction ('increasing' or 'decreasing') of monotonic sequence numbers. Go to the editor
+Input:
+[1, 2, 3, 4, 5, 6]
+Output:
+Increasing.
+Input:
+[6, 5, 4, 3, 2, 1]
+Output:
+Decreasing.
+Input:
+[19, 19, 5, 5, 5, 5, 5]
+Output:
+Not a monotonic sequence!
+"""
+"""
+def task20(list):
+    if list[0] > list[-1]:
+        lst = [*range(list[0], list[-1]-1, -1)]
+        if list == lst:
+            return 'Decreasing.'
+    if list[0] < list[-1]:
+        lst = [*range(list[0], list[-1]+1, 1)]
+        if list == lst:
+            return 'Increasing.'
+    return 'Not a monotonic sequence!'
+"""
+
+
+def task20(list):
+    if all([list[i] > list[i + 1] for i in range(len(list)-1) ]):
+        return 'Decreasing.'
+    if all([list[i] < list[i + 1] for i in range(len(list)-1) ]):
+        return 'Increasing.'
+    return 'Not a monotonic sequence!'
+    
+
+#print(task20([1, 2, 3, 4, 5, 6]))
+#print(task20([6, 5, 4, 3, 2, 1]))
+#print(task20([19, 19, 5, 5, 5, 5, 5]))
+
+"""
+21. Write a Python program to check, for each string in a given list, whether the last character is an isolated letter or not. Return True or False. Go to the editor
+Input:
+['cat', 'car', 'fear', 'center']
+Output:
+[False, False, False, False]
+Input:
+['ca t', 'car', 'fea r', 'cente r']
+Output:
+[True, False, True, True]
+"""
+
+def task21(list):
+    return [True if word[-2] == ' ' else False for word in list]
+
+#print(task21(['cat', 'car', 'fear', 'center']))
+#print(task21(['ca t', 'car', 'fea r', 'cente r']))
+
+"""
+22. Write a Python program to compute the sum of the ASCII values of the upper-case characters in a given string. Go to the editor
+Input:
+PytHon ExerciSEs
+Output:
+373
+Input:
+JavaScript
+Output:
+157
+"""
+
+def task22(s):
+    return sum([ord(c) for c in s if c.isupper()])
+
+#print(task22('PytHon ExerciSEs'))
+#print(task22('JavaScript'))
+
+"""
+23. Write a Python program to find the indices for which the numbers in the list drops. Go to the editor
+NOTE: You can detect multiple drops just by checking if nums[i] < nums[i-1]
+Input:
+[0, -1, 3, 8, 5, 9, 8, 14, 2, 4, 3, -10, 10, 17, 41, 22, -4, -4, -15, 0]
+Output:
+[1, 4, 6, 8, 10, 11, 15, 16, 18]
+Input:
+[6, 5, 4, 3, 2, 1]
+Output:
+[1, 2, 3, 4, 5]
+Input:
+[1, 19, 5, 15, 5, 25, 5]
+Output:
+[0, 2, 4, 6]
+"""
+
+def task23(list):
+    return [i for i in range(1,len(list),1) if list[i] < list[i-1]]
+
+#print(task23([0, -1, 3, 8, 5, 9, 8, 14, 2, 4, 3, -10, 10, 17, 41, 22, -4, -4, -15, 0]))
+
+"""
+24. Write a Python program to create a list whose ith element is the maximum of the first i elements from a input list. Go to the editor
+Input:
+[0, -1, 3, 8, 5, 9, 8, 14, 2, 4, 3, -10, 10, 17, 41, 22, -4, -4, -15, 0]
+Output:
+[0, 0, 3, 8, 8, 9, 9, 14, 14, 14, 14, 14, 14, 17, 41, 41, 41, 41, 41, 41]
+Input:
+[6, 5, 4, 3, 2, 1]
+Output:
+[6, 6, 6, 6, 6, 6]
+Input:
+[1, 19, 5, 15, 5, 25, 5]
+Output:
+[1, 19, 19, 19, 19, 25, 25]
+"""
+"""
+def task24(list):
+    result = [list[0]]
+    for i in range(1, len(list)):
+        if result[-1] > list[i]:
+            result.append(result[-1])
+        else:
+            result.append(list[i])
+    return result
+"""
+
+def task24(list):
+    return [max(list[:i]) for i in range(1, len(list)+1)]
+
+ 
+
+#print(task24([0, -1, 3, 8, 5, 9, 8, 14, 2, 4, 3, -10, 10, 17, 41, 22, -4, -4, -15, 0]))
+#print(task24([6, 5, 4, 3, 2, 1]))
+#print(task24([1, 19, 5, 15, 5, 25, 5]))
+
+"""
+25. Write a Python program to find the XOR of two given strings interpreted as binary numbers. Go to the editor
+Input:
+['0001', '1011']
+Output:
+0b1010
+Input:
+['100011101100001', '100101100101110']
+Output:
+0b110001001111
+"""
+
+
+def task25(list):
+    result = '0b'
+    for i in range(len(list[0])):
+        if list[0][i] == list[1][i]:
+            result += '0'
+        else: 
+            result += '1'
+    return result
+
+
+
+
+#print(task25(['0001', '1011']))
+#print(task25(['100011101100001', '100101100101110']))
+
+"""
+26. Write a Python program to find the largest number where commas or periods are decimal points. Go to the editor
+Input:
+['100', '102,1', '101.1']
+Output:
+102.1
+"""
 
 
 
