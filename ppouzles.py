@@ -188,7 +188,9 @@ Output:
 [['The', 'colors', 'in', 'my', 'studyroom', 'are', 'blue', 'green', 'and', 'yellow.'], [' ', ' ', ' ', ' ', ' ', ' ', ', ', ', ', ' ']]
 
 """
+from multiprocessing.sharedctypes import Value
 import re
+from statistics import mean
 from string import printable
 
 from pyparsing import identchars
@@ -614,6 +616,97 @@ Input:
 Output:
 102.1
 """
+
+
+def task26(list):
+    return max([float(i.replace(',','.')) for i in list])
+    
+
+#print(task26(['100', '102,1', '101.1']))
+
+
+"""
+27. Write a Python program to find x that minimizes mean squared deviation from a given a list of numbers. Go to the editor
+Input:
+[4, -5, 17, -9, 14, 108, -9]
+Output:
+17.142857142857142
+Input:
+[12, -2, 14, 3, -15, 10, -45, 3, 30]
+Output:
+1.1111111111111112
+
+"""
+
+def task27(list):
+    return mean(list)
+
+#print(task27([4, -5, 17, -9, 14, 108, -9]))
+#print(task27([12, -2, 14, 3, -15, 10, -45, 3, 30]))
+
+"""
+28. Write a Python program to select a string from a given list of strings with the most unique characters. Go to the editor
+Input:
+['cat', 'catatatatctsa', 'abcdefhijklmnop', '124259239185125', '', 'foo', 'unique']
+Output:
+abcdefhijklmnop
+Input:
+['Green', 'Red', 'Orange', 'Yellow', '', 'White']
+Output:
+Orange
+"""
+
+def task28(list):
+    dict = {i:len(set(i)) for i in list}
+    return max(dict, key=lambda x: dict[x])
+    #return  max(dict, key = dict.get)
+
+#print(task28(['cat', 'catatatatctsa', 'abcdefhijklmnop', '124259239185125', '', 'foo', 'unique']))
+#print(task28(['Green', 'Red', 'Orange', 'Yellow', '', 'White']))
+
+"""
+29. Write a Python program to find the indices of two numbers that sum to 0 in a given list of numbers. Go to the editor
+Input:
+[1, -4, 6, 7, 4]
+Output:
+[4, 1]
+Input:
+[1232, -20352, 12547, 12440, 741, 341, 525, 20352, 91, 20]
+Output:
+[1, 7]
+"""
+
+def task29(list):
+    for i in list:
+        for j in list:
+            if i == -j:
+                return [list.index(i), list.index(j)]
+
+
+#print(task29([1, -4, 6, 7, 4]))
+#print(task29([1232, -20352, 12547, 12440, 741, 341, 525, 20352, 91, 20]))
+
+"""
+30. Write a Python program to find the list of strings that has fewer total characters (including repetitions). Go to the editor
+Input:
+[['this', 'list', 'is', 'narrow'], ['I', 'am', 'shorter but wider']]
+Output:
+['this', 'list', 'is', 'narrow']
+Input:
+[['Red', 'Black', 'Pink'], ['Green', 'Red', 'White']]
+Output:
+['Red', 'Black', 'Pink']
+
+"""
+
+def task30(list1, list2):
+    return list1 if len(''.join(list1).replace(' ', '')) < len(''.join(list2).replace(' ', '')) else list2
+    
+
+#print(task30(['this', 'list', 'is', 'narrow'], ['I', 'am', 'shorter but wider']))
+#print(task30(['Red', 'Black', 'Pink'], ['Green', 'Red', 'White']))
+
+
 
 
 
