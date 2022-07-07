@@ -458,8 +458,10 @@ pat = re.compile(r' +// +')     ##### add your solution here
 #print(pat.split(s3, maxsplit=1))     ##### add your solution here for s3
 ['42// hi//bye//see', 'carefully']
 
+#
 
 
+print(re.search(r'ab*c', 'abc ac adc abbbc').group(0))
 
 
 
