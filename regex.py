@@ -461,8 +461,219 @@ pat = re.compile(r' +// +')     ##### add your solution here
 #
 
 
-print(re.search(r'ab*c', 'abc ac adc abbbc').group(0))
+#m = re.search(r'ab.*?c', 'abc ac adc abbbc')
+
+#m = re.fullmatch(r'a(.*?) (.*)d(.*)c', 'abc ac adc abbbc')
+# m = re.search(r'(a.c)', 'abc ac adc abbbc')
+# print(m.group(0))
+# print(m[0])
+#print(m[2])
+#print(m[3])
+
+# m = re.search(r'b.*d', 'abc ac adc abbbdc')
+
+# print(m.span())
+
+# m = re.search(r'w(.*)me', 'awesome')
+
+# print(m.group(1))
+
+#m = re.sub(r'2|3', lambda m: str(int(m[0])**2), 'a^2 + b^2 - C*3')
+
+
+# d = '2020/04/25,1986/Mar/02,77/12/31'
+
+# m_iter = re.finditer(r'(.*?),', d)
+
+# for m in m_iter:
+#     print(m[1])
+
+# greeting = 'Have a nice weekend'
+
+# print(re.subn(r'e', 'E', greeting))
+
+# print(greeting)
+
+
+#Working with matched portions
+
+# a) For the given strings, extract the matching portion from first is to last t.
+
+
+str1 = 'This the biggest fruit you have seen?'
+str2 = 'Your mission is to read and practice consistently'
+
+pat = re.compile(r'is.*t')     ##### add your solution here
+
+##### add your solution here for str1
+
+m = re.search(pat, str1)
+#print(m[0])
+'is the biggest fruit'
+m = re.search(pat, str2)
+#print(m[0])
+'ission is to read and practice consistent'
+
+#b) Find the starting index of first occurrence of is or the or was or to for the given input strings.
 
 
 
+s1 = 'match after the last newline character'
+s2 = 'and then you want to test'
+s3 = 'this is good bye then'
+s4 = 'who was there to see?'
 
+pat = re.compile(r'is|the|was|to')      ##### add your solution here
+
+#print(re.search(pat, s1).start())
+12
+#print(re.search(pat, s2).start())
+4
+#print(re.search(pat, s3).start())
+2
+#print(re.search(pat, s4).start())
+4
+
+#c) Find the starting index of last occurrence of is or the or was or to for the given input strings.
+
+s1 = 'match after the last newline character'
+s2 = 'and then you want to test'
+s3 = 'this is good bye then'
+s4 = 'who was there to see?'
+
+pat = re.compile(r'.*(is|the|was|to)')      ##### add your solution here
+
+#print(re.search(pat, s1).span(1)[0])
+12
+#print(re.search(pat, s2).span(1)[0])
+18
+#print(re.search(pat, s3).span(1)[0])
+17
+#print(re.search(pat, s4).span(1)[0])
+14
+
+# d) The given input string contains : exactly once. Extract all characters after the : as output.
+
+
+ip = 'fruits:apple, mango, guava, blueberry'
+
+pat = re.compile(r':(.*)')
+
+#print(pat.search(ip)[1])
+'apple, mango, guava, blueberry'
+
+
+#e) The given input strings contains some text followed by - followed by a number. Replace that number with its log value using math.log().
+
+s1 = 'first-3.14'
+s2 = 'next-123'
+
+pat = re.compile(r'-(.*)')      ##### add your solution here
+
+import math
+#print(pat.sub(lambda m: '-' + str(math.log(float(m[1]))), s1))    ##### add your solution here for s1
+'first-1.144222799920162'
+#print(pat.sub(lambda m: '-' + str(math.log(float(m[1]))), s2))    ##### add your solution here for s2
+'next-4.812184355372417'
+
+
+# f) Replace all occurrences of par with spar, spare with extra and park with garden for the given input strings.
+
+str1 = 'apartment has a park'
+str2 = 'do you have a spare cable'
+str3 = 'write a parser'
+
+d = {'par' : 'spar', 'spare' : 'extra', 'park' : 'garden'}
+pat = re.compile(r's?par(e|k)?')
+
+#print(pat.sub(lambda m: d[m[0]], str1))        ##### add your solution here for str1
+'aspartment has a garden'
+#print(pat.sub(lambda m : d[m[0]], str2))       ##### add your solution here for str2
+'do you have a extra cable'
+#print(pat.sub(lambda m : d[m[0]], str3))      ##### add your solution here for str3
+'write a sparser'
+
+# g) Extract all words between ( and ) from the given input string as a list. Assume that the input will not contain any broken parentheses.
+
+ip = 'another (way) to reuse (portion) matched (by) capture groups'
+
+#print(re.findall(r'\((.*?)\)', ip))     ##### add your solution here
+['way', 'portion', 'by']
+
+# h) Extract all occurrences of < up to next occurrence of >, provided there is at least one character in between < and >.
+
+ip = 'a<apple> 1<> b<bye> 2<> c<cat>'
+
+#print(re.findall(r'<.+?>', ip))       ##### add your solution here
+['<apple>', '<> b<bye>', '<> c<cat>']
+
+# i) Use re.findall to get the output as shown below for the given input strings. Note the characters used in the input strings carefully.
+
+row1 = '-2,5 4,+3 +42,-53 4356246,-357532354 '
+row2 = '1.32,-3.14 634,5.63 63.3e3,9907809345343.235 '
+
+pat = re.compile(r'(.*?),(.*?) ')       ##### add your solution here
+
+#print(pat.findall(row1))
+[('-2', '5'), ('4', '+3'), ('+42', '-53'), ('4356246', '-357532354')]
+#print(pat.findall(row2))
+[('1.32', '-3.14'), ('634', '5.63'), ('63.3e3', '9907809345343.235')]
+
+# j) This is an extension to previous question.
+
+#For row1, find the sum of integers of each tuple element. For example, sum of -2 and 5 is 3.
+#For row2, find the sum of floating-point numbers of each tuple element. For example, sum of 1.32 and -3.14 is -1.82.
+
+
+row1 = '-2,5 4,+3 +42,-53 4356246,-357532354 '
+row2 = '1.32,-3.14 634,5.63 63.3e3,9907809345343.235 '
+
+# should be same as previous question
+pat = re.compile(r'(.*?),(.*?) ')       ##### add your solution here
+
+
+#print([int(m[1]) + int(m[2]) for m in pat.finditer(row1)])
+##### add your solution here for row1
+[3, 7, -11, -353176108]
+#print([float(m[1]) + float(m[2]) for m in pat.finditer(row2)])
+##### add your solution here for row2
+[-1.82, 639.63, 9907809408643.234]
+
+# k) Use re.split to get the output as shown below.
+
+ip = '42:no-output;1000:car-truck;SQEX49801'
+
+#print(re.split(r':.+?-(.+?);', ip))       ##### add your solution here
+['42', 'output', '1000', 'truck', 'SQEX49801']
+
+
+# l) For the given list of strings, change the elements into a tuple of original element and number of times t occurs in that element.
+
+words = ['sequoia', 'attest', 'tattletale', 'asset']
+
+#print([re.subn(r't', 't', word)  for word in words])
+[('sequoia', 0), ('attest', 3), ('tattletale', 4), ('asset', 1)]
+
+# m) The given input string has fields separated by :. Each field contains four uppercase alphabets followed optionally by two digits. Ignore the last field, which is empty. See docs.python: Match.groups and use re.finditer to get the output as shown below. If the optional digits aren't present, show 'NA' instead of None.
+
+ip = 'TWXA42:JWPA:NTED01:'
+
+print([m.groups() for m in re.finditer(r'(.{4})(..)?:', ip)])
+[('TWXA', '42'), ('JWPA', 'NA'), ('NTED', '01')]
+
+
+# n) Convert the comma separated strings to corresponding dict objects as shown below.
+
+row1 = 'name:rohan,maths:75,phy:89,'
+row2 = 'name:rose,maths:88,phy:92,'
+
+pat = re.compile(r'(.+?):(.+?),') 
+
+
+print({m.group(1):m.group(2) for m in pat.finditer(row1)})
+     ##### add your solution here
+print({m.group(1):m.group(2) for m in pat.finditer(row2)})
+##### add your solution here for row1
+{'name': 'rohan', 'maths': '75', 'phy': '89'}
+##### add your solution here for row2
+{'name': 'rose', 'maths': '88', 'phy': '92'}
